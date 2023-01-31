@@ -76,7 +76,7 @@ if(data){
   res.json({data})
 }
 } catch (error) {
-  res.status(404).json({error})
+  res.json({error})
 }
 })
 router.put("/unlike",protect,async(req,res)=>{
