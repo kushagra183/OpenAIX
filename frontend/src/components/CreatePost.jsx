@@ -22,7 +22,7 @@ const CreatePost = () => {
         if(form.prompt && form.photo){
           setLoading(true);
           
-         axios.post("http://localhost:8080/api/post",{prompt:form.prompt,photo:form.photo},{headers:{
+         axios.post("https://openaixbackend-production.up.railway.app/api/post",{prompt:form.prompt,photo:form.photo},{headers:{
           'Authorization': `Bearer ${localStorage.getItem("jwt")}` }
         }).then(()=>navigate("/")).catch(err=>alert(err)).then(()=>setLoading(false))
      
@@ -43,7 +43,7 @@ const CreatePost = () => {
   const generateImage= ()=>{
     if(form.prompt){
       setGeneratingImg(true);
-      axios.post("http://localhost:8080/api/dalle",{prompt:form.prompt}).then((res)=>{setForm({...form, photo:`data:image/jpeg;base64,${res.data.photo}`})
+      axios.post("https://openaixbackend-production.up.railway.app/api/dalle",{prompt:form.prompt}).then((res)=>{setForm({...form, photo:`data:image/jpeg;base64,${res.data.photo}`})
       
     }      ).catch(err=>alert(err)).then(()=>setGeneratingImg(false))
    

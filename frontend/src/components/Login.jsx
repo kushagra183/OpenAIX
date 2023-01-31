@@ -22,7 +22,7 @@ const Login = ({setReloadNav}) => {
   const submitHandler=(e)=>{
 
     e.preventDefault();
-    axios.post("http://localhost:8080/api/login",{
+    axios.post("https://openaixbackend-production.up.railway.app/api/login",{
        email, password
     }).then((res)=>{  localStorage.setItem("uId",res.data.uId);localStorage.setItem("user",res.data.data);localStorage.setItem("jwt",res.data.token);setReloadNav(true); navigate("/")}).catch((err)=>{if(err.response.status>399 && err.response.status<500){ console.log(err);alert("invalid credential")}alert(err)})
   }

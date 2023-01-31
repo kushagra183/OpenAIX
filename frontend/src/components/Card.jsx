@@ -1,29 +1,45 @@
 import React, { useEffect } from 'react'
-import { download } from '../assets'
+import { download, logo } from '../assets'
 import FileSaver from "file-saver";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import axios from 'axios';
+import { useState } from 'react';
 
 
 const Card = ({ _id, name, prompt, photo,likes,setAllPosts,data,del }) => {
-
+const[refresh,setRefresh]=useState(false);
  async function downloadImage(_id, photo) {
     FileSaver.saveAs(photo, `download-${_id}.jpg`);
   }
 
-  const handleLike = (id)=>{
-    axios.put("http://localhost:8080/api/post/like",{postId:id},{headers:{"Authorization":`Bearer ${localStorage.getItem("jwt")}`}}).then((res)=>{const newData = data.map(item=>{if(item._id == res.data.data._id ){return res.data.data}else return item});setAllPosts(newData)}).catch(err=>console.log(err))
+  const handleLike = async(id)=>{
+    try {
+      let response = await axios.put("https://openaixbackend-production.up.railway.app/api/post/like",{postId:id},{headers:{"Authorization":`Bearer ${localStorage.getItem("jwt")}`}})
+     const newData = data.map(item=>{if(item._id == response.data.data._id ){return response.data.data}else return item});
+     setAllPosts(newData)
+    } catch (error) {
+      console.log(error);
+    }
+   
   }
-  const handleUnlike = (id)=>{
-    axios.put("http://localhost:8080/api/post/unlike",{postId:id},{headers:{"Authorization":`Bearer ${localStorage.getItem("jwt")}`}}).then((res)=>{{const newData = data.map(item=>{if(item._id == res.data.data._id ){return res.data.data}else return item});setAllPosts(newData)}}).catch(err=>console.log(err))
+  const handleUnlike = async(id)=>{
+    try {
+     let response = await axios.put("https://openaixbackend-production.up.railway.app/api/post/unlike",{postId:id},{headers:{"Authorization":`Bearer ${localStorage.getItem("jwt")}`}})
+     const newData = data.map(item=>{if(item._id == response.data.data._id ){return response.data.data}else return item});setAllPosts(newData)
+      
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 
 
   const deleteImg=(id)=>{
-  axios.delete(`http://localhost:8080/api/post/deletepost/${id}`,{headers:{"Authorization":`Bearer ${localStorage.getItem("jwt")}`}}).then((res)=>{setAllPosts(res.data)}).catch(err=>console.log(err))
+  axios.delete(`https://openaixbackend-production.up.railway.app/api/post/deletepost/${id}`,{headers:{"Authorization":`Bearer ${localStorage.getItem("jwt")}`}}).then((res)=>{setAllPosts(res.data)}).catch(err=>console.log(err))
   }
   return (
     <div className="rounded-xl group relative shadow-card hover:shadow-cardhover card">
+      {refresh}
     <img
       className="w-full h-auto object-cover rounded-xl"
       src={photo}

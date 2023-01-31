@@ -27,7 +27,7 @@ const Home = () => {
 
   const fetchPosts = async () => {
     setLoading(true);
-    axios.get("http://localhost:8080/api/post").then(res=>{console.log(res.data.data);setAllPosts(res.data.data.reverse())}).then(()=>setLoading(false)).catch((err)=>console.log(err))
+    axios.get("https://openaixbackend-production.up.railway.app/api/post").then(res=>{console.log(res.data.data);setAllPosts(res.data.data.reverse())}).then(()=>setLoading(false)).catch((err)=>console.log(err))
    
   };
 

@@ -27,7 +27,7 @@ const Mypost = () => {
     
       const fetchPosts = async () => {
         setLoading(true);
-        axios.get("http://localhost:8080/api/post/mypost",{headers:{"Authorization":`Bearer ${localStorage.getItem("jwt")}`}}).then(res=>{setAllPosts(res.data.data.reverse())}).then(()=>setLoading(false)).catch((err)=>console.log(err))
+        axios.get("https://openaixbackend-production.up.railway.app/api/post/mypost",{headers:{"Authorization":`Bearer ${localStorage.getItem("jwt")}`}}).then(res=>{setAllPosts(res.data.data.reverse())}).then(()=>setLoading(false)).catch((err)=>console.log(err))
        
       };
 
